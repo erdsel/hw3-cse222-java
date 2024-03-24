@@ -1,6 +1,3 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +9,7 @@ public class Main {
         Inventory inventory = new Inventory();
 
         while (true) {
-            System.out.println("Welcome to the Electronics Inventory Management System!");
+            System.out.println("\n\nWelcome to the Electronics Inventory Management System!");
             System.out.println("Please select an option:");
             System.out.println("1. Add a new device");
             System.out.println("2. Remove a device");
@@ -23,13 +20,7 @@ public class Main {
             System.out.println("7. Calculate total inventory value");
             System.out.println("8. Restock a device");
             System.out.println("9. Export inventory report");
-
-
-
-
-            // Diğer seçenekleri de burada listele
             System.out.println("0. Exit");
-
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // İnt sonrası kalan new line'ı temizlemek için
@@ -37,8 +28,7 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.print("Enter category name (Smart Phone, Laptop, Television, Headphones, Smart Watch): ");
-                    String category = scanner.nextLine();
-                    System.out.println(category);
+                    String category = scanner.nextLine().trim();
 
                     System.out.print("Enter device name: ");
                     String name = scanner.nextLine();
@@ -52,7 +42,7 @@ public class Main {
 
                     Device newDevice = null;
                     switch (category) {
-                        case "SmartPhone":
+                        case "Smart Phone":
                             newDevice = new SmartPhone(name, price, quantity);
                             break;
                         case "Laptop":
@@ -122,42 +112,18 @@ public class Main {
                     System.out.print("Enter new quantity (leave blank to keep current quantity): ");
                     String newQuantityStr = scanner.nextLine();
                     int newQuantity = newQuantityStr.isEmpty() ? deviceToUpdate.getQuantity() : Integer.parseInt(newQuantityStr);
-
-                    // Güncellemeleri yap
-                    deviceToUpdate.setPrice(newPrice);
-                    deviceToUpdate.setQuantity(newQuantity);
-
+                    inventory.updateDeviceDetails(updateName,deviceToUpdate.getName(),newPrice,newQuantity);
                     System.out.println(deviceToUpdate.getName() + " details updated: Price - " + newPrice + "$, Quantity - " + newQuantity);
                     break;
+
                 case 4:
                     System.out.println("Device List:");
-                    int count = 1; // Cihazların sıralı bir şekilde numaralandırılması için sayaç.
-                    for (ArrayList<Device> deviceList : inventory.getDevices()) {
-                        for (Device device : deviceList) {
-                            System.out.println(count++ + ". Category: " + device.getCategory() +
-                                    ", Name: " + device.getName() +
-                                    ", Price: " + device.getPrice() + "$" +
-                                    ", Quantity: " + device.getQuantity());
-                        }
-                    }
-                    if (count == 1) {
-                        System.out.println("No devices in inventory.");
-                    }
+                    inventory.listAllDevices();
                     break;
+
+
                 case 5:
-                    Device cheapestDevice = null;
-                    double minPrice = Double.MAX_VALUE;
-
-                    // Tüm cihazları dolaş ve en ucuz olanı bul
-                    for (ArrayList<Device> deviceList : inventory.getDevices()) {
-                        for (Device device : deviceList) {
-                            if (device.getPrice() < minPrice) {
-                                minPrice = device.getPrice();
-                                cheapestDevice = device;
-                            }
-                        }
-                    }
-
+                    Device cheapestDevice = inventory.findCheapestDevice();
                     // En ucuz cihazın bilgilerini yazdır
                     if (cheapestDevice != null) {
                         System.out.println("The cheapest device is:");
@@ -169,6 +135,7 @@ public class Main {
                         System.out.println("No devices found in inventory.");
                     }
                     break;
+
                 case 6:
                     // Tüm cihazları tek bir liste içine al
                     List<Device> allDevices = new ArrayList<>();
@@ -189,15 +156,14 @@ public class Main {
                                 ", Quantity: " + device.getQuantity());
                     }
                     break;
+
                 case 7:
-                    double totalValue = 0.0;
-                    for (ArrayList<Device> deviceList : inventory.getDevices()) {
-                        for (Device device : deviceList) {
-                            totalValue += device.getPrice() * device.getQuantity();
-                        }
-                    }
+                    double totalValue = inventory.calculateTotalInventoryValue();
                     System.out.printf("Total inventory value: $%,.2f\n", totalValue);
+
                     break;
+
+
                 case 8:
                     System.out.print("Enter the name of the device to restock: ");
                     String restockName = scanner.nextLine();
@@ -227,6 +193,7 @@ public class Main {
                         System.out.print("Enter the quantity to add: ");
                         quantityChange = scanner.nextInt();
                         deviceToRestock.setQuantity(deviceToRestock.getQuantity() + quantityChange);
+
                         System.out.println(restockName + " restocked. New quantity: " + deviceToRestock.getQuantity());
                     } else if (action.equalsIgnoreCase("Remove")) {
                         System.out.print("Enter the quantity to remove: ");
@@ -237,6 +204,8 @@ public class Main {
                         } else {
                             deviceToRestock.setQuantity(newQuantity2);
                             System.out.println(restockName + " stock reduced. New quantity: " + deviceToRestock.getQuantity());
+
+
                         }
                     } else {
                         System.out.println("Invalid action.");
@@ -245,51 +214,10 @@ public class Main {
                     break;
                 case 9:
                     String reportPath = "InventoryReport.txt"; // Raporun kaydedileceği dosyanın yolu
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportPath))) {
-                        writer.write("Electronics Shop Inventory Report\n");
-                        writer.write("Generated on: " + java.time.LocalDate.now() + "\n");
-                        writer.write("-------------------------------------------------\n");
-                        writer.write("| No. | Category | Name | Price | Quantity |\n");
-                        writer.write("-------------------------------------------------\n");
-
-                        int totalDevices = 0;
-                        double totalValue2 = 0.0;
-                        int deviceNo = 1; // Cihaz numaraları için sayaç
-
-                        for (ArrayList<Device> deviceList : inventory.getDevices()) {
-                            for (Device device : deviceList) {
-                                writer.write(String.format("| %d | %s | %s | $%.2f | %d |\n",
-                                        deviceNo++,
-                                        device.getCategory(),
-                                        device.getName(),
-                                        device.getPrice(),
-                                        device.getQuantity()));
-
-                                totalDevices++;
-                                totalValue2 += device.getPrice() * device.getQuantity();
-                            }
-                        }
-
-                        writer.write("-------------------------------------------------\n");
-                        writer.write("Summary:\n");
-                        writer.write("- Total Number of Devices: " + totalDevices + "\n");
-                        writer.write(String.format("- Total Inventory Value: $%,.2f\n", totalValue2));
-                        writer.write("End of Report\n");
-
-                        System.out.println("Inventory report exported to " + reportPath);
-                    } catch (IOException e) {
-                        System.err.println("Error while writing to file: " + e.getMessage());
-                    }
+                    inventory.exportInventoryToFile(reportPath);
+                    System.out.println("InventoryReport.txt doned.");
                     break;
 
-
-
-
-
-
-
-
-                // Diğer caseleri ekleyin
                 case 0:
                     System.out.println("Exiting...");
                     System.exit(0);

@@ -1,3 +1,8 @@
+/**
+ * {@code Device} interface yapısı, Elektronik cihazların ortak özelliklerini tanımlayan arayüz.
+ * Bu arayüz, bir cihazın kategorisini, adını, fiyatını ve miktarını sorgulama ve ayarlama işlevlerini içerir.
+ * Her elektronik cihaz bu arayüzü uygulayarak, bu temel özelliklere sahip olur.
+ */
 public interface Device {
 
     /**

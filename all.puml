@@ -1,0 +1,260 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": false,
+    "cutInterfaceStructures": false,
+    "cutDataStructures": false,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 6,
+    "backwardDepth": 6,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "Device",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+
+
+'nodes
+subgraph cluster_16631492 {
+   	label=Inventory
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   Inventory16631492[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Inventory</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   devices: LinkedList&lt;ArrayList&lt;Device&gt;&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addDevice(newDevice: Device)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ calculateTotalInventoryValue(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ exportInventoryToFile(filePath: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findCheapestDevice(): Device</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findDeviceByName(name: String): Device</TD></TR>
+<TR><TD ALIGN="LEFT" >+ listAllDevices()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeDevice(deviceToRemove: Device): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ restockDevice(deviceName: String, newQuantity: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateDeviceDetails(name: String, newName: String, newPrice: double, newQuantity: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+subgraph cluster_173394245 {
+   	label=SmartPhone
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   SmartPhone173394245[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SmartPhone</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   category: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+subgraph cluster_17485115 {
+   	label=Headphones
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   Headphones17485115[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Headphones</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   category: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+subgraph cluster_179654822 {
+   	label=SmartWatch
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   SmartWatch179654822[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)SmartWatch</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   category: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+subgraph cluster_2026118662 {
+   	label=Laptop
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   Laptop2026118662[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Laptop</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   category: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+subgraph cluster_2043677302 {
+   	label=Device
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   Device2043677302[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(I)Device</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ getCategory(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getName(): String</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPrice(): double</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getQuantity(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setName(name: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setPrice(price: double)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ setQuantity(quantity: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#F1E5FD"
+];
+}
+
+subgraph cluster_675714098 {
+   	label=Television
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+
+   Television675714098[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Television</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   category: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   name: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   price: double [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   quantity: int [1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+}
+
+'edges
+Device2043677302 -> Headphones17485115[arrowhead=none, arrowtail=empty, dir=both];
+Device2043677302 -> Laptop2026118662[arrowhead=none, arrowtail=empty, dir=both];
+Device2043677302 -> SmartPhone173394245[arrowhead=none, arrowtail=empty, dir=both];
+Device2043677302 -> SmartWatch179654822[arrowhead=none, arrowtail=empty, dir=both];
+Device2043677302 -> Television675714098[arrowhead=none, arrowtail=empty, dir=both];
+Inventory16631492 -> Device2043677302[label="devices
+[0..*]"];
+
+}
+@enduml
